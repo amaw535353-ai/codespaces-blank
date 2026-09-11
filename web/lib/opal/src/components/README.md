@@ -1,0 +1,47 @@
+# Opal Components
+
+High-level UI components built on the [`@opal/core`](../core/) primitives. Every component in this directory delegates state styling (hover, active, disabled) to `Interactive.Stateless` or `Interactive.Stateful` via CSS data-attributes and the `--interactive-foreground` / `--interactive-foreground-icon` custom properties — no duplicated Tailwind class maps.
+
+## Package export
+
+Components are exposed via:
+
+```ts
+import { Button, SelectButton, OpenButton, Tag } from "@opal/components";
+```
+
+The barrel file at `index.ts` re-exports each component and its prop types. Each component imports its own `styles.css` internally.
+
+## Components
+
+| Component                                      | Description                                                  | Docs                                           |
+| ---------------------------------------------- | ------------------------------------------------------------ | ---------------------------------------------- |
+| [Button](./buttons/button/)                    | Label and/or icon-only stateless button                      | [README](./buttons/button/README.md)           |
+| [AttachmentItemButton](./buttons/attachment-item-button/) | File-like resource row: icon/image tile, content, center and action slots | [README](./buttons/attachment-item-button/README.md) |
+| [SelectButton](./buttons/select-button/)       | Stateful toggle button with optional foldable content        | [README](./buttons/select-button/README.md)    |
+| [OpenButton](./buttons/open-button/)           | Trigger button with rotating chevron for popovers            | [README](./buttons/open-button/README.md)      |
+| [Tag](./tag/)                                  | Small colored label for status/category metadata             | [README](./tag/README.md)                      |
+| [DateRangePicker](./inputs/date-range-picker/) | Preset date-range strip with a custom-range calendar popover | [README](./inputs/date-range-picker/README.md) |
+| [InputFile](./inputs/input-file/)              | Text field that doubles as a file picker                     | [README](./inputs/input-file/README.md)        |
+| [InputAvatar](./inputs/input-avatar/)          | Avatar frame with primary input chrome                       | [README](./inputs/input-avatar/README.md)      |
+| [InputComboBox](./inputs/input-combo-box/)     | Filterable input/select hybrid with create-new support       | [README](./inputs/input-combo-box/README.md)   |
+| [InputImage](./inputs/input-image/)            | Circular image dropzone with edit overlay                    | [README](./inputs/input-image/README.md)       |
+| [InputKeyValue](./inputs/input-key-value/)     | Key/value pair editor with validation                        | [README](./inputs/input-key-value/README.md)   |
+| [InputMultiSelect](./inputs/input-multi-select/) | Searchable multi-select with a selected-items list below | [README](./inputs/input-multi-select/README.md) |
+| [InputNumber](./inputs/input-number/)          | Number field with steppers and reset                         | [README](./inputs/input-number/README.md)      |
+| [ListFieldInput](./inputs/list-field-input/)   | Type-and-Enter list builder with removable chips below       | [README](./inputs/list-field-input/README.md)  |
+
+## Adding new components
+
+1. Create a directory under `components/` in kebab-case (e.g. `components/inputs/text-input/`)
+2. Add a `styles.css` for layout-only CSS (colors come from Interactive primitives)
+3. Add a `components.tsx` with the component and its exported props type
+4. Import `styles.css` at the top of your `components.tsx`
+5. Add a `README.md` inside the component directory with architecture, props, and usage examples
+6. In `components/index.ts`, re-export the component:
+   ```ts
+   export {
+     TextInput,
+     type TextInputProps,
+   } from "@opal/components/inputs/text-input/components";
+   ```
