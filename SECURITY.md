@@ -1,5 +1,15 @@
 # Security Policy
 
+## Personal fork notice
+
+This repository is Ahmed's public learning fork of Onyx.
+
+The policy below is copied from the upstream Onyx repository. It governs reports to the Onyx maintainers.
+
+It does not authorize testing of Onyx Cloud, public deployments, GitHub, Codespaces, or third-party systems.
+
+Local laboratory authorization is separate. See [assessment governance](docs/security/assessment-governance/README.md).
+
 We take the security of Onyx and our users seriously. Thank you for helping
 keep Onyx and its community safe by practicing responsible disclosure.
 
@@ -71,3 +81,5 @@ We will not pursue or support legal action against researchers who:
   disclosure.
 
 Thank you for helping keep Onyx and our community secure.
+
+Authoritative upstream source: <https://github.com/onyx-dot-app/onyx/blob/main/SECURITY.md>

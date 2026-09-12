@@ -1,67 +1,42 @@
 # Evidence Handling
 
-## Required record
+## Private evidence location
 
-Create one case record for each test or finding.
+The primary location is `$HOME/onyx-security-private/evidence` on Ahmed's local workstation.
 
-Record these fields:
+This directory is outside every Git repository. Set directory permissions to `0700` and evidence files to `0600`.
 
-- Case identifier.
-- UTC timestamp.
-- Assessor.
-- Authorization commit SHA.
-- Target commit SHA and environment identifier.
-- Test hypothesis.
-- Exact command or request, with secrets removed.
-- Expected result.
-- Actual result.
-- Evidence classification.
-- Hash for material evidence files.
-- Cleanup and restore result.
-- Conclusion and confidence.
+Use `/tmp/onyx-evidence-staging` only for temporary Codespaces collection. Encrypt evidence before transfer and delete the staging copy.
 
-## Collection
+## Encryption and access
 
-- Capture only evidence needed to prove or disprove the hypothesis.
-- Prefer text logs and deterministic requests over screenshots.
-- Keep original timestamps and file metadata when useful.
-- Mark all synthetic tenant, user, and document identifiers.
-- Redact tokens, cookies, credentials, personal data, and unrelated content.
+Encrypt restricted and embargoed evidence with `age` to Ahmed's public recipient key.
 
-## Integrity
+Keep the private `age` identity outside GitHub and Codespaces. Only Ahmed may access unredacted evidence.
 
-Hash stored evidence with SHA-256. Record the hash in the case file.
+## Required case record
 
-Do not edit the original after hashing. Create a separate sanitized copy for sharing.
+Record the case ID, UTC timestamp, assessor, authorization SHA, target SHA, and environment ID.
 
-## Storage
+Also record the hypothesis, command, results, classification, evidence SHA-256, cleanup result, conclusion, and confidence.
 
-This public repository may contain sanitized test plans and fixed regression tests.
+Do not put secrets in recorded commands.
 
-It must not contain restricted synthetic traces or embargoed findings.
+## Integrity and sharing
 
-Store sensitive material in encrypted, access-controlled private storage.
+Hash each original with SHA-256. Do not edit it after hashing.
 
-## Evidence log template
+Create a separate sanitized copy for sharing. Log each transfer with sender, recipient, time, method, hash, and receipt status.
 
-| Field | Value |
-| --- | --- |
-| Case ID | `ONYX-YYYY-NNN` |
-| Timestamp | `YYYY-MM-DDTHH:MM:SSZ` |
-| Authorization SHA |  |
-| Target SHA |  |
-| Environment |  |
-| Hypothesis |  |
-| Expected |  |
-| Actual |  |
-| Classification |  |
-| Evidence SHA-256 |  |
-| Cleanup result |  |
-| Conclusion |  |
+## Retention
 
-## Transfer and deletion
+- Delete temporary raw data at session end.
+- Keep normal case evidence for 90 days after case closure.
+- Keep embargoed evidence until 30 days after coordinated disclosure or case closure, whichever is later.
+- Record every deletion or approved retention extension.
 
-Log every transfer of embargoed evidence. Use the recipient's approved private channel.
+## Public repository
 
-When deletion is due, remove all copies that the owner controls. Record the deletion date.
+Only sanitized plans, reports, and regression tests may enter this repository.
 
+Never commit private keys, raw traces, restricted data, or unresolved vulnerability details.
