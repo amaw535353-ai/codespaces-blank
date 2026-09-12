@@ -35,6 +35,12 @@ backend/onyx/evals/one_off/*.json
 jira_test_env
 settings.json
 
+# security lab private state
+.security-lab/
+evidence/
+*.age
+age-key.txt
+
 # others
 /deployment/data/nginx/app.conf
 /deployment/data/nginx/mcp.conf.inc

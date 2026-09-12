@@ -1,26 +1,17 @@
 {
   "mcpServers": {
-    "playwright": {
-      "command": "npx",
+    "onyx-security-lab-mock": {
+      "command": "env",
       "args": [
-        "@playwright/mcp@0.0.78",
-        "--headless",
-        "--isolated",
-        "--browser",
-        "chromium"
+        "-i",
+        "PATH=/usr/local/bin:/usr/bin:/bin",
+        "HOME=/tmp/onyx-lab-mcp",
+        "uv",
+        "run",
+        "--offline",
+        "python",
+        "tools/security_lab/mock_mcp_server.py"
       ]
-    },
-    "agent-wiki": {
-      "type": "http",
-      "url": "https://dev-wiki.onyx.app/api/mcp"
-    },
-    "linear": {
-      "type": "http",
-      "url": "https://mcp.linear.app/mcp"
-    },
-    "sentry": {
-      "type": "http",
-      "url": "https://mcp.sentry.dev/mcp"
     }
   }
 }
