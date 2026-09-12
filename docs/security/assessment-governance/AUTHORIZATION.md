@@ -2,83 +2,55 @@
 
 ## Authorization status
 
-**PENDING OWNER APPROVAL**
+**PENDING SEPARATE OWNER APPROVAL**
 
-This document does not authorize active testing until the owner records approval below.
+This file does not authorize active testing. The owner must approve an immutable scope commit separately.
 
 ## Purpose
 
-The assessment supports defensive learning and improvement of a self-controlled Onyx laboratory.
-
-The work will identify risks, verify controls, create fixes, and produce sanitized portfolio evidence.
+The assessment supports defensive learning and improvement of a self-controlled Onyx Lite laboratory.
 
 ## Parties
 
 | Role | Party | Authority |
 | --- | --- | --- |
-| System owner and authorizer | Ahmed | Owns the repository and controls the laboratory |
+| System owner and authorizer | Ahmed | Controls the repository and laboratory |
 | Assessor | Ahmed | Runs approved tests and makes safety decisions |
-| AI assistant | ChatGPT Work | Drafts, explains, reviews, and runs only approved actions |
+| AI assistant | ChatGPT Work | Assists under human control |
 | Upstream maintainer | Onyx project | Receives possible upstream vulnerabilities privately |
 
-The human assessor remains responsible for scope, interpretation, safety, and disclosure decisions.
+Ahmed remains responsible for scope, interpretation, safety, cost, and disclosure decisions.
 
-## Authorized assets
+## Authorized assets and activities
 
-- Source code in `amaw535353-ai/codespaces-blank`.
-- A local checkout of that repository.
-- A private Codespace created from that repository, if Ahmed starts it.
-- Onyx services inside the approved laboratory.
-- Laboratory PostgreSQL, Redis, and OpenSearch services.
-- Local mock LLM and MCP services.
-- Synthetic users, tenants, documents, credentials, prompts, and logs.
+Only assets listed in [SCOPE.md](SCOPE.md) are eligible for approval.
 
-Authorization covers only assets owned or controlled by Ahmed.
-
-## Authorized activities
-
-- Passive source and configuration review.
-- Architecture and data-flow analysis.
-- Threat modeling and control mapping.
-- Dependency and secret scanning of the owned repository.
-- Bounded authentication and authorization tests.
-- Bounded prompt-injection, RAG, agent, MCP, and API tests.
-- Safe validation of suspected defects with synthetic data.
-- Defensive patches and regression tests.
-- Evidence capture under the evidence-handling rules.
+Eligible work includes passive review, threat modeling, bounded tests, defensive patches, regression tests, and evidence capture.
 
 ## Prohibited activities
 
-- Testing Onyx Cloud, public demos, or another person's deployment.
-- Testing GitHub or the Codespaces platform as a service.
-- Testing third-party APIs, connectors, identity providers, or MCP servers.
-- Using real customer, employee, or production data.
-- Using copied production tokens, credentials, backups, or logs.
-- Social engineering, phishing real people, or physical attacks.
-- Persistence, backdoors, malware, destructive tests, or data exfiltration.
-- High-volume denial-of-service or uncontrolled resource consumption.
-- Public disclosure of unresolved vulnerabilities.
-- Any paid API, paid SaaS, or billable cloud action.
+- Testing GitHub, Codespaces, Onyx Cloud, public demos, upstream infrastructure, or third parties.
+- Using real identities, data, tokens, credentials, backups, or logs.
+- Starting external connectors, external MCP servers, or paid services.
+- Starting Standard services or code execution without new approval.
+- Social engineering, persistence, malware, destructive tests, or public disclosure of unresolved findings.
 
-## Validity
+## Immutable approval process
 
-This authorization starts only after approval. It ends when the owner revokes it or the scope changes.
+1. Commit the complete scope, rules, limits, and laboratory configuration.
+2. Record that commit's full SHA as the scope baseline.
+3. Review the baseline without changing it.
+4. Approve it with a signed Git tag. Put the approval details in the tag message.
+5. Copy `tools/security_lab/approval.env.template` to `.security-lab/approval.env`.
+6. Record the approved SHA and signed approval tag in that local runtime file.
+7. Check out the approved SHA before active testing.
 
-A material scope change requires a new review and approval.
+The signed tag message must use [APPROVAL_RECORD_TEMPLATE.md](APPROVAL_RECORD_TEMPLATE.md).
 
-## Revocation
+Changing the baseline creates a new SHA and invalidates its approval. Repeat the process after every material change.
 
-The owner can stop the assessment at any time. All tools and tests must stop immediately after revocation.
+## Validity and revocation
 
-## Approval record
+The separate approval must include start and end dates. The owner may revoke approval at any time.
 
-| Field | Required value |
-| --- | --- |
-| Decision | `APPROVED` or `REJECTED` |
-| Approved scope version | Commit SHA containing this package |
-| Authorizer | Ahmed |
-| Approval date | `YYYY-MM-DD` |
-| Conditions | List conditions or write `None` |
-
-Decision: **PENDING**
-
+All testing must stop immediately after expiry, revocation, or a material scope change.

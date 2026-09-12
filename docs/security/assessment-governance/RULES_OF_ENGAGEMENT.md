@@ -2,91 +2,54 @@
 
 ## Before each session
 
-1. Confirm authorization status is `APPROVED`.
-2. Record the repository commit and environment identifier.
-3. Confirm all target services belong to the approved laboratory.
-4. Confirm external providers and connectors are disabled.
-5. Confirm all users, documents, and credentials are synthetic.
-6. Create a restore point for changed data or configuration.
-7. Define the expected result and stop condition for each test.
+1. Verify the separate signed approval and approved scope SHA.
+2. Check out the approved SHA.
+3. Confirm the target is Onyx Lite.
+4. Run `tools/security_lab/lab.sh verify`.
+5. Confirm all identities, content, and credentials are synthetic.
+6. Create a restore point.
+7. Define the test hypothesis, expected result, and stop condition.
 
 ## Test execution
 
-- Prefer passive review before active testing.
-- Run one test hypothesis at a time.
-- Use the least privilege and least impact needed.
-- Send backend requests through the Onyx frontend proxy.
-- Keep tests reproducible and bounded.
+- Run one hypothesis at a time.
+- Use the least privilege and impact needed.
+- Send active requests from `lab_assessor` through Nginx.
 - Record expected and actual results.
 - Do not expand scope after an unexpected result.
 
-## Default technical limits
+## Mandatory limits
 
-| Resource | Default limit |
+| Resource | Limit |
 | --- | --- |
-| Concurrent test requests | 10 |
-| Load-test duration | 60 seconds |
-| Test upload size | 1 MB |
-| Test tenants | 2 synthetic tenants |
-| Test accounts | 5 synthetic accounts |
-| Agent or tool recursion | Disabled or fixed finite depth |
-| External API calls | 0 |
-| Paid service calls | 0 |
+| Requests per second | 2 |
+| Total requests per case | 100 |
+| Concurrent requests | 5 |
+| Active test duration | 60 seconds |
+| Upload size | 1 MiB |
+| Agent steps per run | 10 |
+| Tool calls per run | 20 |
+| Input tokens per run | 4,096 |
+| Output tokens per run | 1,024 |
+| Total tokens per run | 5,120 |
+| API CPU and memory | 1 CPU; 1,536 MiB |
+| Web CPU and memory | 0.5 CPU; 768 MiB |
+| PostgreSQL CPU and memory | 0.5 CPU; 768 MiB |
+| Nginx CPU and memory | 0.25 CPU; 256 MiB |
+| Assessor CPU and memory | 0.25 CPU; 256 MiB |
+| Remaining disk | At least 5 GiB and 20 percent free |
+| External or paid calls | 0 |
 
-Lower a limit when the laboratory shows stress. Raising a limit requires a recorded owner decision.
-
-## Permitted techniques
-
-- Manual source and configuration review.
-- Static analysis and dependency review.
-- Controlled API requests against the laboratory.
-- Synthetic access-control matrix tests.
-- Controlled prompt and retrieved-document injection tests.
-- Safe agent and MCP permission tests using mocks.
-- Bounded file-upload and input-validation tests.
-- Regression tests for verified fixes.
-
-## Prohibited techniques
-
-- Internet-wide scanning or public-target reconnaissance.
-- Credential stuffing, real password reuse, or account takeover.
-- Real-person phishing or social engineering.
-- Unbounded fuzzing, recursion, tokens, storage, or concurrency.
-- Resource-exhaustion tests that risk service or host failure.
-- Destructive database, filesystem, or container operations without a tested restore path.
-- Data extraction beyond the minimum synthetic proof.
-- Installing persistence, backdoors, or remote-control software.
+Lower a limit when the laboratory shows stress. Raising any limit requires a new scope baseline and approval.
 
 ## Stop conditions
 
-Stop immediately if any condition occurs:
+Stop when a target leaves scope, real data appears, cost may occur, or a limit approaches.
 
-- A target is outside the approved asset list.
-- A request may reach an external service.
-- Real personal, customer, employee, or production data appears.
-- A real credential, session, token, or secret appears.
-- Cost may be incurred.
-- Resource use approaches a configured limit.
-- The application, host, or database becomes unstable.
-- A test produces destructive or unexpected effects.
-- The next action's authorization is uncertain.
-- A possible genuine upstream vulnerability is confirmed.
+Stop when the system becomes unstable.
 
-## Incident action
-
-1. Stop the test.
-2. Preserve the minimum necessary evidence.
-3. Isolate affected laboratory services.
-4. Rotate any exposed laboratory credential.
-5. Restore the known-good state when safe.
-6. Record the event and owner decision.
+Also stop when an external request is possible, a destructive effect occurs, or authorization is uncertain.
 
 ## Cleanup
 
-- Stop and remove temporary containers.
-- Delete synthetic credentials and temporary datasets.
-- Restore changed configuration.
-- Verify no public port remains open.
-- Keep only approved evidence.
-- Record cleanup completion.
-
+Stop the stack with `tools/security_lab/lab.sh stop`. Remove temporary data and confirm no non-private port remains.

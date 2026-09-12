@@ -2,47 +2,49 @@
 
 Active testing stays blocked until every mandatory item is complete.
 
-## Mandatory authorization checks
+## Authorization and scope
 
-- [ ] The owner changed the authorization decision to `APPROVED`.
-- [ ] The approval record names the exact authorization commit SHA.
+- [ ] The scope baseline exists as an immutable full commit SHA.
+- [ ] A signed Git tag approves that SHA.
+- [ ] The approval includes start and end dates.
+- [ ] The checked-out commit equals the approved scope SHA.
+- [ ] The deployment is Onyx Lite.
+- [ ] Standard services and code execution remain disabled.
 - [ ] The assessor controls every in-scope target.
-- [ ] No public or third-party target is included.
-- [ ] The environment identifier and target commit are recorded.
 
-## Mandatory safety checks
+## Network and credentials
 
-- [ ] External model APIs and production connectors are disabled.
-- [ ] No local proxy forwards requests to an external provider.
-- [ ] Test services use loopback, container networking, or private forwarding.
+- [ ] Setup mode completed before active testing.
+- [ ] The active target network reports `Internal=true`.
+- [ ] `.mcp.json` contains only the local stdio mock.
+- [ ] Target containers receive no GitHub, Claude, AWS, SSH, cloud, or user credentials.
+- [ ] Target services do not load an environment file.
+- [ ] Active requests run from `lab_assessor`.
+- [ ] Only port 3000 is forwarded and every forwarded port is private.
+
+## Safety and evidence
+
 - [ ] All identities, documents, prompts, credentials, and logs are synthetic.
-- [ ] No paid API, paid SaaS, or billable cloud action is possible.
-- [ ] Request, time, size, token, and concurrency limits are configured.
+- [ ] Request, time, size, step, tool, token, CPU, memory, process, and disk limits are active.
 - [ ] Restore and cleanup steps were tested.
-- [ ] Stop conditions are visible to the assessor.
-
-## Mandatory evidence checks
-
-- [ ] The case identifier and UTC start time are recorded.
-- [ ] Expected results exist before each active test.
-- [ ] Private evidence storage is available.
+- [ ] The private evidence location exists with owner-only access.
+- [ ] The `age` private identity remains outside GitHub and Codespaces.
 - [ ] Redaction and SHA-256 procedures are ready.
+
+## Cost and disclosure
+
+- [ ] The Codespaces zero-cost budget gate passed, or Codespaces is not used.
+- [ ] No paid API, SaaS, or billable cloud action is possible.
+- [ ] The upstream private-reporting channel is available.
 - [ ] No unresolved finding will enter this public repository.
-
-## Mandatory disclosure checks
-
-- [ ] The assessor reviewed the repository's root `SECURITY.md`.
-- [ ] The upstream private-reporting link is available.
-- [ ] Public issues, pull requests, and discussions are excluded for unresolved findings.
-- [ ] Publication requires owner and maintainer coordination.
 
 ## Session decision
 
 | Field | Value |
 | --- | --- |
 | Session ID |  |
-| Authorization commit SHA |  |
-| Target commit SHA |  |
+| Approved scope SHA |  |
+| Signed approval tag |  |
 | Environment ID |  |
 | Decision | `GO` or `NO-GO` |
 | Decision owner | Ahmed |
@@ -50,4 +52,3 @@ Active testing stays blocked until every mandatory item is complete.
 | Notes |  |
 
 Default decision: **NO-GO**
-
