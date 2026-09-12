@@ -17,13 +17,8 @@ permissions:
 
 jobs:
   helm-chart-check:
-    # See https://runs-on.com/runners/linux/
-    runs-on:
-      [
-        runs-on,
-        runner=8cpu-linux-x64,
-        "run-id=${{ github.run_id }}-helm-chart-check",
-      ]
+    # This public learning fork uses a standard, zero-cost hosted runner.
+    runs-on: ubuntu-latest
     timeout-minutes: 45
 
     # fetch-depth 0 is required for helm/chart-testing-action

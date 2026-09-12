@@ -1,35 +1,36 @@
 # Framework Applicability
 
-This register supports risk decisions. It is not a compliance or certification claim.
+This register supports risk decisions. It does not claim compliance or certification.
 
-Framework status was checked on 2026-09-11. Review it when an official source changes.
+Record the exact version, access date, download URL, and SHA-256 for each retained artifact.
 
-| Resource | Application to this assessment | Primary evidence |
+| Resource | Application | Primary evidence |
 | --- | --- | --- |
-| NIST AI RMF 1.0 | Govern, map, measure, and manage Onyx AI risks | Risk register, owners, metrics, treatment decisions |
-| NIST AI 600-1 GenAI Profile | Identify GenAI risks in prompts, retrieval, models, agents, and outputs | Risk scenarios and control tests |
-| NIST SP 800-218 SSDF 1.1 | Review secure development and vulnerability response | Repository controls, reviews, tests, and release evidence |
-| NIST SP 800-218A | Apply AI-specific secure-development tasks where Onyx uses AI components | AI dependency, data, model, and test records |
-| OWASP GenAI LLM Top 10 2026 | Create application risk hypotheses and requirements | Risk-to-test matrix |
-| OWASP Agentic Applications Top 10 2026 | Create agent, tool, identity, memory, and failure hypotheses | Agent risk and control records |
-| OWASP Agent Control Standard | Assess visibility, traceability, permissions, and runtime control | Agent inventory and enforcement evidence |
-| OWASP GenAI Security Industry Framework Crosswalk | Connect GenAI risks to wider controls | Master crosswalk and gap record |
-| MITRE SAFE-AI | Decompose the system and select controls using threat knowledge | Architecture, threat model, and residual risk |
-| Onyx `SECURITY.md` | Control private reporting and publication | Disclosure case record |
+| NIST AI RMF 1.0 | Govern, map, measure, and manage AI risks | Risk register and treatment decisions |
+| NIST AI RMF Playbook | Select practical actions for each AI RMF function | Action backlog and owners |
+| NIST AI 600-1 GenAI Profile | Identify GenAI risks and actions | Risk scenarios and requirements |
+| NIST SP 800-218 SSDF 1.1 | Review secure development and response | Repository, review, and test evidence |
+| NIST SP 800-218A | Apply relevant AI development tasks with SSDF 1.1 | AI dependency, data, and test records |
+| OWASP GenAI LLM Top 10 2026 | Create LLM application hypotheses | Risk-to-test matrix |
+| OWASP Agentic Applications Top 10 2026 | Create agent and tool hypotheses | Agent risk records |
+| OWASP Agent Control Standard | Assess agent visibility and runtime control | Agent inventory and control evidence |
+| OWASP GenAI Industry Framework Crosswalk | Map GenAI risks to broader controls | Crosswalk and gap record |
+| MITRE ATLAS | Identify AI adversary tactics and techniques | Threat model and test hypotheses |
+| MITRE SAFE-AI | Select and assess threat-informed controls | Control plan and residual risk |
+| Upstream Onyx `SECURITY.md` | Control private reporting and publication | Disclosure case record |
 
 ## Baseline decisions
 
-- Use NIST AI RMF 1.0 until NIST publishes a replacement baseline.
-- Use NIST AI 600-1 as the GenAI companion profile.
-- Use finalized SSDF 1.1 for the secure-development baseline.
-- Treat SSDF 1.2 draft material as informative until finalized.
-- Apply SP 800-218A selectively because Onyx is an AI application.
-- Record the exact version and access date for each OWASP artifact.
-- Use MITRE SAFE-AI with MITRE ATLAS threat knowledge.
+- Use AI RMF 1.0 until NIST publishes a replacement baseline.
+- Use finalized SSDF 1.1. Treat draft revisions as informative.
+- Use SP 800-218A with SP 800-218, not alone.
+- Record exact OWASP artifact versions because these resources change.
+- Use SAFE-AI with MITRE ATLAS threat knowledge.
 
 ## Official references
 
-- NIST AI RMF 1.0: <https://doi.org/10.6028/NIST.AI.100-1>
+- NIST AI RMF: <https://www.nist.gov/itl/ai-risk-management-framework>
+- NIST AI RMF Playbook: <https://airc.nist.gov/airmf-resources/playbook/>
 - NIST AI 600-1: <https://doi.org/10.6028/NIST.AI.600-1>
 - NIST SP 800-218: <https://doi.org/10.6028/NIST.SP.800-218>
 - NIST SP 800-218A: <https://doi.org/10.6028/NIST.SP.800-218A>
@@ -37,6 +38,6 @@ Framework status was checked on 2026-09-11. Review it when an official source ch
 - OWASP Agentic Top 10 2026: <https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/>
 - OWASP Agent Control Standard: <https://genai.owasp.org/resource/agent-control-standard-acs/>
 - OWASP Industry Crosswalk: <https://genai.owasp.org/resource/genai-security-industry-framework-crosswalk/>
+- MITRE ATLAS: <https://atlas.mitre.org/>
 - MITRE SAFE-AI: <https://atlas.mitre.org/pdf-files/SAFEAI_Full_Report.pdf>
-- Onyx security policy: <https://github.com/onyx-dot-app/onyx/security>
-
+- Upstream Onyx security policy: <https://github.com/onyx-dot-app/onyx/security>

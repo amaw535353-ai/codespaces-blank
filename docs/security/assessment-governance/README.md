@@ -1,8 +1,8 @@
 # Onyx Security Assessment Governance
 
-Status: Draft. Active testing is not authorized until the approval checklist is complete.
+Status: Draft. Active testing is not authorized until the approval checklist passes.
 
-This package governs Ahmed's self-controlled Onyx security lab. It applies before any active security test starts.
+This package governs Ahmed's self-controlled Onyx Lite security laboratory.
 
 ## Documents
 
@@ -13,40 +13,38 @@ This package governs Ahmed's self-controlled Onyx security lab. It applies befor
 - [Data classification](DATA_CLASSIFICATION.md)
 - [Evidence handling](EVIDENCE_HANDLING.md)
 - [Framework applicability](FRAMEWORK_APPLICABILITY.md)
+- [Laboratory operations](LAB_OPERATIONS.md)
+- [Approval record template](APPROVAL_RECORD_TEMPLATE.md)
 - [Responsible disclosure](RESPONSIBLE_DISCLOSURE.md)
 - [Vulnerability report template](VULNERABILITY_REPORT_TEMPLATE.md)
 - [Approval checklist](APPROVAL_CHECKLIST.md)
 
 ## Decision gate
 
-Do not start active testing until all mandatory checklist items pass.
+Passive source review may begin. Do not start active testing until every mandatory check passes.
 
-Passive source review may begin before approval. It must not access external systems or sensitive data.
+The signed approval must reference an immutable scope commit. It must remain separate from that commit.
 
 ## Core boundaries
 
-- Use only a self-controlled Onyx laboratory.
-- Use only synthetic users, documents, credentials, and events.
-- Keep external model APIs and production connectors disabled.
-- Do not test GitHub, Onyx Cloud, public demos, or third-party services.
-- Stop when scope, safety, data ownership, cost, or authorization is uncertain.
-- Keep genuine unresolved vulnerabilities private.
+- Use Onyx Lite only.
+- Use only self-controlled target containers and synthetic data.
+- Keep target containers on the internal active-test network.
+- Use only the local synthetic MCP server.
+- Do not start code execution, RAG, connectors, or Standard services.
+- Do not test GitHub, Codespaces, Onyx Cloud, public demos, or third parties.
+- Stop when authorization, safety, ownership, cost, or scope is uncertain.
 
 ## Public repository warning
 
-This repository is public. Do not commit secrets, exploit code, or unresolved vulnerability evidence.
-
-Store sensitive evidence in an access-controlled private location. Publish only sanitized material after coordinated disclosure.
+Do not commit credentials, restricted evidence, or unresolved vulnerability details.
 
 ## Document control
 
 | Field | Value |
 | --- | --- |
-| System | Onyx security laboratory |
+| System | Onyx Lite security laboratory |
 | Repository | `amaw535353-ai/codespaces-blank` |
-| Owner and authorizer | Ahmed |
-| Assessor | Ahmed, with AI assistance under human control |
-| Package version | 1.0-draft |
-| Prepared | 2026-09-11 |
-| Review trigger | Scope, environment, data, tool, or disclosure-policy change |
-
+| Owner and assessor | Ahmed |
+| Package version | 1.1-draft |
+| Review trigger | Scope, environment, data, tool, cost, or disclosure-policy change |

@@ -1,63 +1,57 @@
 # Assessment Scope
 
-## Assessment target
+## Baseline
 
-The target is a self-controlled Onyx laboratory built from `amaw535353-ai/codespaces-blank`.
+The initial target is **Onyx Lite** from `amaw535353-ai/codespaces-blank`.
 
-## In scope
+Use these Compose files in order:
+
+1. `deployment/docker_compose/docker-compose.yml`
+2. `deployment/docker_compose/docker-compose.onyx-lite.yml`
+3. `deployment/docker_compose/docker-compose.security-lab-active.yml`
+
+## Active target assets
 
 | Asset | Allowed access | Conditions |
 | --- | --- | --- |
 | Repository source | Read and change | Use a branch and pull request |
-| Local checkout | Full laboratory access | Use synthetic data only |
-| Private Codespace | Full laboratory access | Owner-started; ports stay private |
-| Onyx frontend | `localhost:3000` or private forwarded port | Route backend calls through the frontend |
-| Onyx backend | Through the frontend proxy | No direct public exposure |
-| PostgreSQL | Laboratory database only | No production backups |
-| Redis and OpenSearch | Laboratory services only | No shared or production instance |
-| Local mock LLM | Test requests only | No forwarding to external APIs |
-| Local mock MCP server | Test tool calls only | Fake credentials only |
-| Containers and logs | Laboratory resources only | Apply evidence and cleanup rules |
+| Nginx and Onyx web | Port 3000 through private forwarding | Do not expose another port |
+| Onyx API | Through Nginx only | No direct public exposure |
+| PostgreSQL | Container network only | Synthetic data only |
+| Local MCP mock | Local stdio only | Synthetic deterministic output |
+| Lab assessor container | Active requests only | No secrets, mounts, or external network |
+
+## Not active in the Lite baseline
+
+- Redis.
+- OpenSearch.
+- MinIO.
+- Indexing and inference model servers.
+- Background workers and connectors.
+- RAG indexing and retrieval.
+- Code interpreter and agent-execution containers.
+- External LLM, embedding, reranking, search, email, storage, identity, or MCP services.
+
+Adding any item above is a material scope change. Update this package and obtain new approval first.
 
 ## Out of scope
 
-- `onyx.app`, Onyx Cloud, and public Onyx demonstrations.
-- `onyx-dot-app/onyx` infrastructure and maintainer accounts.
-- GitHub.com and GitHub Codespaces service infrastructure.
-- Another organization or person's system, account, device, or data.
-- Real external LLM, embedding, reranking, search, email, storage, or MCP services.
-- Real Google Drive, Slack, Microsoft, or identity-provider accounts.
-- Production databases, backups, logs, credentials, or customer data.
-- Package registries and download services as security-test targets.
-- Third-party integrations named by the application.
+- Onyx Cloud, `onyx.app`, public demos, and upstream infrastructure.
+- GitHub and GitHub Codespaces as security-test targets.
+- Another person's system, account, device, or data.
+- Real accounts, credentials, databases, backups, logs, and customer data.
+- Package registries as assessment targets.
 
-## Network boundary
+## Network modes
 
-Keep services on loopback, the container network, or private port forwarding.
+**Setup mode** permits approved repository, package, and container-image downloads. Do not run active tests in this mode.
 
-Do not make a laboratory port public. Do not scan public addresses or adjacent infrastructure.
+**Active-test mode** starts target services on `onyx_security_lab_active`. This Docker network is internal.
 
-Outbound model and connector traffic is prohibited. A local proxy to an external API remains external.
+Only Nginx port 3000 binds to host loopback. Run active requests from `lab_assessor`.
 
-Dependency downloads need separate owner approval. They are setup actions, not security-test targets.
+## Data and time boundaries
 
-## Data boundary
+Use only marked synthetic identities, documents, prompts, credentials, and events.
 
-Use only synthetic identities and content. Use reserved domains such as `.test` for fake email addresses.
-
-Example user: `alice@tenant-alpha.test`.
-
-Example document: `Tenant Alpha confidential merger plan - synthetic test document`.
-
-## Time boundary
-
-No standing authorization exists. Approval applies only while this scope remains unchanged.
-
-Review authorization before each assessment session.
-
-## Scope-change process
-
-Stop when a new host, service, connector, data source, credential, or technique appears.
-
-Record the proposed change. Assess its risk. Obtain owner approval before continuing.
-
+The separate approval defines the valid assessment dates. Review authorization before every session.
