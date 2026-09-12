@@ -11,7 +11,7 @@ services:
     cpus: 1.0
     mem_limit: 1536m
     pids_limit: 256
-    environment:
+    environment: !override
       AWS_EC2_METADATA_DISABLED: "true"
       AUTH_TYPE: basic
       DISABLE_VECTOR_DB: "true"
@@ -35,6 +35,8 @@ services:
     cpus: 0.50
     mem_limit: 768m
     pids_limit: 128
+    environment: !override
+      INTERNAL_URL: http://api_server:8080
 
   relational_db:
     env_file: !reset []
@@ -42,7 +44,7 @@ services:
     cpus: 0.50
     mem_limit: 768m
     pids_limit: 128
-    environment:
+    environment: !override
       POSTGRES_USER: onyx_lab
       POSTGRES_PASSWORD: synthetic-lab-only
 
@@ -52,6 +54,11 @@ services:
     cpus: 0.25
     mem_limit: 256m
     pids_limit: 64
+    environment: !override
+      DOMAIN: localhost
+      NGINX_PROXY_CONNECT_TIMEOUT: "30"
+      NGINX_PROXY_SEND_TIMEOUT: "30"
+      NGINX_PROXY_READ_TIMEOUT: "30"
     ports: !override
       - "127.0.0.1:${ONYX_LAB_HOST_PORT:-3000}:80"
 
