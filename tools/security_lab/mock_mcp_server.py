@@ -4,7 +4,6 @@ import re
 
 from fastmcp import FastMCP
 
-
 mcp = FastMCP("Onyx Security Lab Mock")
 
 

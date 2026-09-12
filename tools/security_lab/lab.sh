@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-readonly REPOSITORY_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+REPOSITORY_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+readonly REPOSITORY_ROOT
 readonly COMPOSE_DIRECTORY="${REPOSITORY_ROOT}/deployment/docker_compose"
 readonly APPROVAL_FILE="${REPOSITORY_ROOT}/.security-lab/approval.env"
 readonly NETWORK_NAME="onyx_security_lab_active"
