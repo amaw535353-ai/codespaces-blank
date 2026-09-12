@@ -1,0 +1,94 @@
+# Active-test overlay for the approved Onyx Lite security laboratory.
+# Pull images and install dependencies before using this overlay.
+
+name: onyx-security-lab
+
+services:
+  api_server:
+    env_file: !reset []
+    extra_hosts: !reset []
+    pull_policy: never
+    cpus: 1.0
+    mem_limit: 1536m
+    pids_limit: 256
+    environment: !override
+      AWS_EC2_METADATA_DISABLED: "true"
+      AUTH_TYPE: basic
+      DISABLE_VECTOR_DB: "true"
+      FILE_STORE_BACKEND: postgres
+      CACHE_BACKEND: postgres
+      AUTH_BACKEND: postgres
+      POSTGRES_HOST: relational_db
+      OPENSEARCH_HOST: disabled
+      OPENSEARCH_ADMIN_PASSWORD: synthetic-disabled
+      REDIS_HOST: disabled
+      MODEL_SERVER_HOST: disabled
+      CODE_INTERPRETER_BASE_URL: http://127.0.0.1:9
+      S3_ENDPOINT_URL: http://127.0.0.1:9
+      S3_AWS_ACCESS_KEY_ID: synthetic-disabled
+      S3_AWS_SECRET_ACCESS_KEY: synthetic-disabled
+      ENABLE_CRAFT: "false"
+
+  web_server:
+    env_file: !reset []
+    pull_policy: never
+    cpus: 0.50
+    mem_limit: 768m
+    pids_limit: 128
+    environment: !override
+      INTERNAL_URL: http://api_server:8080
+
+  relational_db:
+    env_file: !reset []
+    pull_policy: never
+    cpus: 0.50
+    mem_limit: 768m
+    pids_limit: 128
+    environment: !override
+      POSTGRES_USER: onyx_lab
+      POSTGRES_PASSWORD: synthetic-lab-only
+
+  nginx:
+    env_file: !reset []
+    pull_policy: never
+    cpus: 0.25
+    mem_limit: 256m
+    pids_limit: 64
+    environment: !override
+      DOMAIN: localhost
+      NGINX_PROXY_CONNECT_TIMEOUT: "30"
+      NGINX_PROXY_SEND_TIMEOUT: "30"
+      NGINX_PROXY_READ_TIMEOUT: "30"
+    ports: !override
+      - "127.0.0.1:${ONYX_LAB_HOST_PORT:-3000}:80"
+
+  # Code execution is outside the initial Lite scope. This service has no
+  # Docker socket or environment file even if someone enables the profile.
+  code-interpreter:
+    profiles: ["requires-separate-authorization"]
+    env_file: !reset []
+    volumes: !reset []
+    pull_policy: never
+
+  # Run active requests from this credential-free container.
+  lab_assessor:
+    image: ${ONYX_BACKEND_IMAGE:-onyxdotapp/onyx-backend:${IMAGE_TAG:-latest}}
+    pull_policy: never
+    entrypoint: ["/bin/sh", "-c"]
+    command: ["trap : TERM INT; sleep infinity & wait"]
+    environment:
+      HOME: /tmp
+      AWS_EC2_METADATA_DISABLED: "true"
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,noexec,nosuid,nodev
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    cpus: 0.25
+    mem_limit: 256m
+    pids_limit: 64
+
+networks:
+  default:
+    name: onyx_security_lab_active
+    internal: true
